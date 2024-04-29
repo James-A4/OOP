@@ -1,11 +1,12 @@
-import java.awt.Point;
+
+import java.util.Arrays;
 
 public class HelloWorld {
 
     public static void main(String[] args) {
-        String message = "Hello \"Jame\"";
-        System.out.println(message);
+        int[][] numbers = { { 1, 2, 3 }, { 4, 5, 6 } };
         
+        System.out.println(Arrays.deepToString(numbers));
     
         
     }
