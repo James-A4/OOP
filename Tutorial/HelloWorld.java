@@ -1,12 +1,16 @@
-
-import java.util.Arrays;
-
+import java.util.Scanner;
 public class HelloWorld {
 
     public static void main(String[] args) {
-        int[][] numbers = { { 1, 2, 3 }, { 4, 5, 6 } };
         
-        System.out.println(Arrays.deepToString(numbers));
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("name: ");
+        String name = scanner.nextLine();
+    
+
+        System.out.println("Youar name is " + name);
+        
+      
     
         
     }
