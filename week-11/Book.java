@@ -33,14 +33,11 @@ public class Book {
     }
 
     public int getPages() {
-        int contentLength = content.length();
-        int pages = contentLength / 700;
-        if (contentLength % 700 != 0) {
-            pages++;
-    
-        }
-        return pages;
+        double contentLength = content.length();
+        return (int) Math.ceil(contentLength / 700);
     }
+
+}
 
 
     public String toString() {
