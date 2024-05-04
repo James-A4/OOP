@@ -1,11 +1,29 @@
 import java.io.*;
 import java.util.*;
 
+class CassetteException extends RuntimeException {
+    public CassetteException(String message) {
+        super(message);
+    }
+}
+class InvalidPasswordException extends RuntimeException {
+    public InvalidPasswordException(String message) {
+        super(message);
+    }
+}
+
 public class Press {
     private Map<String, List<Book>> shelf;
-    private Map<String, Integer> edition;
     private int shelfSize;
+    private Map<String, Integer> edition;
 
+
+    /**
+    * Constructs a new Press with the given path to the book directory and shelf size.
+    *
+    * @param pathToBookDir the path to the directory containing the books
+    * @param shelfSize the size of the shelf in the press
+    */
     public Press(String pathToBookDir, int shelfSize) {
         this.shelf = new HashMap<>();
         this.edition = new HashMap<>();
@@ -53,6 +71,11 @@ public class Press {
         }
     }
 
+    /**
+    * Returns a list of the books in the press.
+    *
+    * @return a list of the books in the press
+    */
     public List<String> getCatalogue() {
         List<String> catalogue = new ArrayList<>();
         for (String bookID : edition.keySet()) {
@@ -61,6 +84,13 @@ public class Press {
         return catalogue;
     }
 
+    /**
+    * Requests a specified number of books with the given book ID.
+    *
+    * @param bookID the ID of the book to request
+    * @param numBooks the number of books to request
+    * @return a list of the requested books
+    */
     public synchronized List<Book> request(String bookID, int numBooks) {
         List<Book> books = new ArrayList<>();
         List<Book> bookShelf = shelf.get(bookID);
@@ -110,13 +140,4 @@ public class Press {
     
     
 }
-public class CassetteException extends RuntimeException {
-    public CassetteException(String message) {
-        super(message);
-    }
-}
-public class InvalidPasswordException extends RuntimeException {
-    public InvalidPasswordException(String message) {
-        super(message);
-    }
-}
+
