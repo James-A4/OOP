@@ -12,6 +12,8 @@ class InvalidPasswordException extends RuntimeException {
     }
 }
 
+
+
 public class Press {
     private Map<String, List<Book>> shelf;
     private int shelfSize;
@@ -50,7 +52,8 @@ public class Press {
         }
     }
 
-    protected synchronized Book print(String bookID, int numEditions) {
+
+    protected Book print(String bookID, int numEditions) {
         int newEdition = this.edition.get(bookID) + numEditions;
         this.edition.put(bookID, newEdition);
         String filename = bookID + ".txt";
@@ -91,7 +94,7 @@ public class Press {
     * @param numBooks the number of books to request
     * @return a list of the requested books
     */
-    public synchronized List<Book> request(String bookID, int numBooks) {
+    public List<Book> request(String bookID, int numBooks) {
         List<Book> books = new ArrayList<>();
         List<Book> bookShelf = shelf.get(bookID);
         int numOnShelf = bookShelf.size() - Collections.frequency(bookShelf, null);
