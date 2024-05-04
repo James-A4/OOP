@@ -130,11 +130,12 @@ public class VendingMachine {
         if (index < 0 || index >= this.shelf.size()) {
             throw new IndexOutOfBoundsException("Book index invalid: " + index);
         }
-
+    
         Book book = this.shelf.get(index);
-        int price = (int) Math.ceil(book.getPages() * this.locationFactor);
-        return price;
+        return (int) Math.ceil(book.getPages() * this.locationFactor);
+    
     }
+    
 
     /**
     * Buys the book at the specified index.
