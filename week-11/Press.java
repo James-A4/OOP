@@ -12,13 +12,14 @@ class InvalidPasswordException extends RuntimeException {
         super(message);
     }
 }
+
 /**
  * Represents a press that manages books.
  */
 public class Press {
     private Map<String, List<Book>> shelf;
-    private Map<String, Integer> edition;
     private int shelfSize;
+    private Map<String, Integer> edition;
 
     /**
      * Constructs a new Press.
@@ -54,6 +55,7 @@ public class Press {
             }
         }
     }
+
     /**
      * Prints a new edition of a book.
      *
@@ -81,6 +83,7 @@ public class Press {
             return null;
         }
     }
+
     /**
      * Returns a list of books in the catalogue.
      *
@@ -93,6 +96,7 @@ public class Press {
         }
         return catalogue;
     }
+
     /**
      * Requests a number of books.
      *
