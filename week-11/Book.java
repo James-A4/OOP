@@ -33,7 +33,7 @@ public class Book {
 
     public int getPages() {
         double contentLength = content.length();
-        return (int) Math.ceil(contentLength / 750.0); // Changed from 700 to 750 as per the requirements
+        return (int) Math.ceil(contentLength / 750); // Changed from 700 to 750 as per the requirements
     }
     @Override
     public String toString() {
