@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 class CassetteException extends RuntimeException {
@@ -84,11 +85,9 @@ public class Press {
      * @return a list of books in the catalogue
      */
     public List<String> getCatalogue() {
-        List<String> catalogue = new ArrayList<>();
-        for (String bookID : edition.keySet()) {
-            catalogue.add(bookID + " (" + edition.get(bookID) + ")");
-        }
-        return catalogue;
+    return edition.entrySet().stream()
+        .map(entry -> entry.getKey() + " (" + entry.getValue() + ")")
+        .collect(Collectors.toList());
     }
     /**
      * Requests a number of books.

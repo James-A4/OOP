@@ -12,12 +12,20 @@ class InvalidPasswordException extends RuntimeException {
         super(message);
     }
 }
-
+/**
+ * Represents a press that manages books.
+ */
 public class Press {
     private Map<String, List<Book>> shelf;
     private Map<String, Integer> edition;
     private int shelfSize;
 
+    /**
+     * Constructs a new Press.
+     *
+     * @param pathToBookDir the path to the directory containing the book files
+     * @param shelfSize the size of the shelf
+     */
     public Press(String pathToBookDir, int shelfSize) {
         this.shelf = new HashMap<>();
         this.edition = new HashMap<>();
@@ -43,8 +51,14 @@ public class Press {
             }
         }
     }
-
-    protected synchronized Book print(String bookID, int numEditions) {
+    /**
+     * Prints a new edition of a book.
+     *
+     * @param bookID the ID of the book to print
+     * @param numEditions the number of new editions to print
+     * @return the new book
+     */
+    protected Book print(String bookID, int numEditions) {
         int newEdition = this.edition.get(bookID) + numEditions;
         this.edition.put(bookID, newEdition);
         String filename = bookID + ".txt";
@@ -64,7 +78,11 @@ public class Press {
             return null;
         }
     }
-
+    /**
+     * Returns a list of books in the catalogue.
+     *
+     * @return a list of books in the catalogue
+     */
     public List<String> getCatalogue() {
         List<String> catalogue = new ArrayList<>();
         for (String bookID : edition.keySet()) {
@@ -72,8 +90,14 @@ public class Press {
         }
         return catalogue;
     }
-
-    public synchronized List<Book> request(String bookID, int numBooks) {
+    /**
+     * Requests a number of books.
+     *
+     * @param bookID the ID of the book to request
+     * @param numBooks the number of books to request
+     * @return a list of the requested books
+     */
+    public List<Book> request(String bookID, int numBooks) {
         List<Book> books = new ArrayList<>();
         List<Book> bookShelf = shelf.get(bookID);
         int numOnShelf = bookShelf.size() - Collections.frequency(bookShelf, null);
@@ -95,6 +119,15 @@ public class Press {
         }
         return books;
     }
+
+    /**
+     * Extracts a book from a file.
+     *
+     * @param bookFile the file containing the book
+     * @param edition the edition of the book
+     * @return the extracted book
+     * @throws IOException if an I/O error occurs
+     */
     private static Book extractBook(File bookFile, int edition) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(bookFile));
         String line = reader.readLine();
@@ -122,4 +155,5 @@ public class Press {
     
     
 }
+
 
