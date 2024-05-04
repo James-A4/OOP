@@ -89,14 +89,16 @@ public class VendingMachine {
 
         Book book = this.shelf.get(index);
         int price = (int) Math.ceil(book.getPages() * this.locationFactor);
-        if (price <= this.cassette) {
-            this.shelf.remove(index);
-            this.cassette -= price;
-            this.safe += price;
-            return book;
-        } else {
+        if (price > this.cassette) {
             throw new CassetteException("Insufficient funds in cassette to purchase book");
         }
+
+        this.shelf.remove(index);
+        this.cassette -= price;
+        this.safe += price;
+        return book;
+        }
+            
     }
 }
 
