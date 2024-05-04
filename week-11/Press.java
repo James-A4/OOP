@@ -35,22 +35,36 @@ public class Press {
         if (bookFiles == null) {
             bookFiles = new File[0];
         }
+
+
         for (File bookFile : bookFiles) {
-            String bookID = bookFile.getName();
-            if (bookID.endsWith(".txt")) {
-                bookID = bookID.substring(0, bookID.length() - 4);
-                try {
-                    Book book = extractBook(bookFile, 0);
-                    edition.put(bookID, 0);
-                    shelf.put(bookID, new ArrayList<Book>(Collections.nCopies(shelfSize, null)));
-                    List<Book> bookShelf = shelf.get(bookID);
-                    bookShelf.set(0, book);
-                } catch (IOException e) {
-                    System.err.println("Error reading book file: " + bookFile.getAbsolutePath());
-                }
+            processBookFile(bookFile);
+        }
+    }
+    private void processBookFile(File bookFile) {
+        String bookID = getBookIdFromFileName(bookFile.getName());
+        if (bookID != null) {
+            try {
+                Book book = extractBook(bookFile, 0);
+                addBookToShelf(bookID, book);
+            } catch (IOException e) {
+                System.err.println("Error reading book file: " + bookFile.getAbsolutePath());
             }
         }
     }
+}
+
+        private String getBookIdFromFileName(String fileName) {
+            return fileName.endsWith(".txt") ? fileName.substring(0, fileName.length() - 4) : null;
+        }
+        
+        private void addBookToShelf(String bookID, Book book) {
+            edition.put(bookID, 0);
+            shelf.put(bookID, new ArrayList<Book>(Collections.nCopies(shelfSize, null)));
+            List<Book> bookShelf = shelf.get(bookID);
+            bookShelf.set(0, book);
+        }
+        
 
 
     protected Book print(String bookID, int numEditions) {
