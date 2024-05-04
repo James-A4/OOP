@@ -1,5 +1,8 @@
 import java.util.List;
+import java.util.Set;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 
 public class VendingMachine {
     private List<Book> shelf;
@@ -21,10 +24,11 @@ public class VendingMachine {
     }
 
     public void insertCoin(int coin) {
-        if (coin == 1 || coin == 2 || coin == 5 || coin == 10 || coin == 20 || coin == 50 || coin == 100 || coin == 200) {
-            this.cassette += coin;
+        Set<Integer> validDenominations = new HashSet<>(Arrays.asList(1, 2, 5, 10, 20, 50, 100, 200));
+        if (validDenominations.contains(coin)) {
+            cassette += coin;
         } else {
-            throw new IllegalArgumentException("Coin is not of the right denomination: " + coin);
+            throw new IllegalArgumentException("Invalid coin denomination");
         }
     }
 
