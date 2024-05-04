@@ -29,8 +29,8 @@ public class VendingMachine {
 
 
     public void insertCoin(int coin) {
-        Set<Integer> validDenominations = new HashSet<>(Arrays.asList(1, 2, 5, 10, 20, 50, 100, 200));
-        if (validDenominations.contains(coin)) {
+        Set<Integer> acceptedCoins = new HashSet<>(Arrays.asList(1, 2, 5, 10, 20, 50, 100, 200));
+        if (acceptedCoins.contains(coin)) {
             cassette += coin;
         } else {
             throw new IllegalArgumentException("Invalid coin denomination");
@@ -74,27 +74,29 @@ public class VendingMachine {
     public int getPrice(int index) {
         if (index < 0 || index >= this.shelf.size()) {
             throw new IndexOutOfBoundsException("Book index invalid: " + index);
-        } else {
-            Book book = this.shelf.get(index);
-            int price = (int) Math.ceil(book.getPages() * this.locationFactor);
-            return price;
         }
+        
+        Book book = this.shelf.get(index);
+        int price = (int) Math.ceil(book.getPages() * this.locationFactor);
+        return price;
     }
+
 
     public Book buyBook(int index) {
         if (index < 0 || index >= this.shelf.size()) {
             throw new IndexOutOfBoundsException("Book index invalid: " + index);
+        } 
+
+        Book book = this.shelf.get(index);
+        int price = (int) Math.ceil(book.getPages() * this.locationFactor);
+        if (price <= this.cassette) {
+            this.shelf.remove(index);
+            this.cassette -= price;
+            this.safe += price;
+            return book;
         } else {
-            Book book = this.shelf.get(index);
-            int price = (int) Math.ceil(book.getPages() * this.locationFactor);
-            if (price <= this.cassette) {
-                this.shelf.remove(index);
-                this.cassette -= price;
-                this.safe += price;
-                return book;
-            } else {
-                throw new CassetteException("Insufficient funds in cassette to purchase book");
-            }
+            throw new CassetteException("Insufficient funds in cassette to purchase book");
         }
     }
 }
+
