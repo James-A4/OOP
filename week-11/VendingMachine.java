@@ -21,19 +21,19 @@ public class VendingMachine {
     }
 
     public void insertCoin(int coin) {
-        if (coin == 1 || coin == 2 || coin == 5 || coin == 10 ||
-            coin == 20 || coin == 50 || coin == 100 || coin == 200) {
+        if (coin == 1 || coin == 2 || coin == 5 || coin == 10 || coin == 20 || coin == 50 || coin == 100 || coin == 200) {
             this.cassette += coin;
         } else {
-            throw new IllegalArgumentException("Invalid coin denomination: " + coin);
+            throw new IllegalArgumentException("Coin is not of the right denomination: " + coin);
         }
     }
 
-    public int returnCoins() {
+    public int cancel() {
         int oldCassette = this.cassette;
         this.cassette = 0;
         return oldCassette;
     }
+
 
     public void restock(List<Book> books, String password) {
         if (this.password.equals(password)) {
