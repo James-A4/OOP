@@ -4,6 +4,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+class CassetteException extends RuntimeException {
+    public CassetteException(String message) {
+        super(message);
+    }
+}
+
+class InvalidPasswordException extends RuntimeException {
+    public InvalidPasswordException(String message) {
+        super(message);
+    }
+}
+
 public class VendingMachine {
     private List<Book> shelf;
     private double locationFactor;
@@ -12,21 +24,16 @@ public class VendingMachine {
     private String password;
 
     public VendingMachine(double locationFactor, String password) {
-        this.shelf = new ArrayList<Book>();
+        this.shelf = new ArrayList<>();
         this.locationFactor = locationFactor;
         this.cassette = 0;
         this.safe = 0;
         this.password = password;
     }
 
-
-
-
     public int getCassette() {
         return this.cassette;
     }
-
-
 
     public void insertCoin(int coin) {
         Set<Integer> acceptedCoins = new HashSet<>(Arrays.asList(1, 2, 5, 10, 20, 50, 100, 200));
@@ -43,13 +50,11 @@ public class VendingMachine {
         return oldCassette;
     }
 
-
-
     public void restock(List<Book> books, String password) {
         if (this.password.equals(password)) {
             this.shelf.addAll(books);
         } else {
-            throw new InvalidPasswordException("The provided password is invalaid for restocking books");
+            throw new InvalidPasswordException("The provided password is invalid for restocking books");
         }
     }
 
@@ -59,12 +64,12 @@ public class VendingMachine {
             this.safe = 0;
             return oldSafe;
         } else {
-            throw new InvalidPasswordException("The provided password is invalaid for emptying the safe");
+            throw new InvalidPasswordException("The provided password is invalid for emptying the safe");
         }
     }
 
     public List<String> getCatalogue() {
-        List<String> catalogue = new ArrayList<String>();
+        List<String> catalogue = new ArrayList<>();
         for (Book book : this.shelf) {
             catalogue.add(book.toString());
         }
@@ -75,17 +80,16 @@ public class VendingMachine {
         if (index < 0 || index >= this.shelf.size()) {
             throw new IndexOutOfBoundsException("Book index invalid: " + index);
         }
-        
+
         Book book = this.shelf.get(index);
         int price = (int) Math.ceil(book.getPages() * this.locationFactor);
         return price;
     }
 
-
     public Book buyBook(int index) {
         if (index < 0 || index >= this.shelf.size()) {
             throw new IndexOutOfBoundsException("Book index invalid: " + index);
-        } 
+        }
 
         Book book = this.shelf.get(index);
         int price = (int) Math.ceil(book.getPages() * this.locationFactor);
@@ -97,8 +101,8 @@ public class VendingMachine {
         this.cassette -= price;
         this.safe += price;
         return book;
-        }
-            
     }
 }
+
+
 
